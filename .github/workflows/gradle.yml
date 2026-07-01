@@ -27,15 +27,9 @@ jobs:
       run: |
         java -jar artifacts/app-ibank-build-for-testers.jar &
     
-    - name: Build with Gradle
-      run: ./gradlew build
+
     
     - name: Run tests
       run: ./gradlew test --info
     
-    - name: Upload test results
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: test-reports
-        path: build/reports/tests/test/
+  

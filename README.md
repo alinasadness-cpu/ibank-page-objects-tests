@@ -1,0 +1,1 @@
+[![Build and Test](https://github.com/alinasadness-cpu/ibank-page-objects-tests/actions/workflows/gradle.yml/badge.svg)](https://github.com/alinasadness-cpu/ibank-page-objects-tests/actions/workflows/gradle.yml)

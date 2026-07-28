@@ -1,5 +1,6 @@
 package ru.netology.page;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import static com.codeborne.selenide.Selenide.$;
 
@@ -10,8 +11,8 @@ public class TransferPage {
     private final SelenideElement cancelButton = $("[data-test-id='action-cancel']");
 
     public TransferPage() {
+        $("h1").shouldHave(Condition.text("Пополнение карты"));
     }
-
 
     public DashboardPage transfer(String amount, String fromCard) {
         amountField.setValue(amount);
@@ -19,7 +20,6 @@ public class TransferPage {
         transferButton.click();
         return new DashboardPage();
     }
-
 
     public DashboardPage cancelTransfer() {
         cancelButton.click();

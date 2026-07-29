@@ -11,32 +11,22 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TransferTest {
     private DashboardPage dashboardPage;
 
-
    
     private final String CARD_1_ID = DataHelper.getFirstCard().getId();
     private final String CARD_2_ID = DataHelper.getSecondCard().getId();
     private final int INITIAL_BALANCE = DataHelper.getFirstCard().getBalance();
 
-    private final String CARD_1_ID = "5559 0000 0000 0001";
-    private final String CARD_2_ID = "5559 0000 0000 0002";
-
-
     @BeforeEach
     void setUp() {
-       
+        
         var authInfo = DataHelper.getAuthInfo();
         LoginPage loginPage = new LoginPage();
-
         var verificationPage = loginPage.validLogin(
                 authInfo.getLogin(),
                 authInfo.getPassword()
         );
         var verificationCode = DataHelper.getVerificationCode();
         dashboardPage = verificationPage.validVerify(verificationCode.getCode());
-
-        var verificationPage = loginPage.validLogin("vasya", "qwerty123");
-        dashboardPage = verificationPage.validVerify("12345");
-
     }
 
     @Test

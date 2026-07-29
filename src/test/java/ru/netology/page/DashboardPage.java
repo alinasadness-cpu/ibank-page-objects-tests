@@ -12,26 +12,26 @@ public class DashboardPage {
     private final String balanceFinish = " р.";
     private ElementsCollection transferButtons = $$("[data-test-id='action-transfer']");
     private SelenideElement refreshButton = $("[data-test-id='action-refresh']");
-
+    
     public DashboardPage() {
         cards.first().shouldBe(Condition.visible);
     }
-
+    
     public int getCardBalance(int cardIndex) {
         String text = cards.get(cardIndex).text();
         return extractBalance(text);
     }
-
-    public int getCardBalance(String cardId) {
+    
+    public int getCardBalance(String cardNumber) {
         for (SelenideElement card : cards) {
             String text = card.text();
-            if (text.contains(cardId)) {
+            if (text.contains(cardNumber)) {
                 return extractBalance(text);
             }
         }
-        throw new IllegalArgumentException("Card with ID " + cardId + " not found");
+        throw new IllegalArgumentException("Card with number " + cardNumber + " not found");
     }
-
+    
     private int extractBalance(String text) {
         int start = text.indexOf(balanceStart);
         int finish = text.indexOf(balanceFinish);
@@ -39,23 +39,23 @@ public class DashboardPage {
         String cleanValue = value.replaceAll("[^0-9]", "");
         return Integer.parseInt(cleanValue);
     }
-
+    
     public TransferPage selectCardForTransfer(int cardIndex) {
         transferButtons.get(cardIndex).click();
         return new TransferPage();
     }
-
-    public TransferPage selectCardForTransfer(String cardId) {
+    
+    public TransferPage selectCardForTransfer(String cardNumber) {
         for (int i = 0; i < cards.size(); i++) {
             String text = cards.get(i).text();
-            if (text.contains(cardId)) {
+            if (text.contains(cardNumber)) {
                 transferButtons.get(i).click();
                 return new TransferPage();
             }
         }
-        throw new IllegalArgumentException("Card with ID " + cardId + " not found");
+        throw new IllegalArgumentException("Card with number " + cardNumber + " not found");
     }
-
+    
     public DashboardPage refresh() {
         refreshButton.click();
         cards.first().shouldBe(Condition.visible);

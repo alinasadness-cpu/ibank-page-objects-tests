@@ -6,18 +6,21 @@ import ru.netology.data.DataHelper;
 import ru.netology.page.DashboardPage;
 import ru.netology.page.LoginPage;
 import ru.netology.page.TransferPage;
+import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TransferTest {
     private DashboardPage dashboardPage;
 
-   
     private final String CARD_1_NUMBER = DataHelper.getFirstCard().getNumber();
     private final String CARD_2_NUMBER = DataHelper.getSecondCard().getNumber();
     private final int INITIAL_BALANCE = DataHelper.getFirstCard().getBalance();
 
     @BeforeEach
     void setUp() {
+        
+        open("http://localhost:9999");
+        
         var authInfo = DataHelper.getAuthInfo();
         LoginPage loginPage = new LoginPage();
         var verificationPage = loginPage.validLogin(

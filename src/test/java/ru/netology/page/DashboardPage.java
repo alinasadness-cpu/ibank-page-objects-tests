@@ -7,10 +7,13 @@ import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.$;
 
 public class DashboardPage {
-    private ElementsCollection cards = $$("[data-test-id='card']");
+ 
+    private ElementsCollection cards = $$(".list__item");
+    
     private final String balanceStart = "баланс: ";
     private final String balanceFinish = " р.";
-    private ElementsCollection transferButtons = $$("[data-test-id='action-transfer']");
+    
+    
     private SelenideElement refreshButton = $("[data-test-id='action-refresh']");
     
     public DashboardPage() {
@@ -41,7 +44,8 @@ public class DashboardPage {
     }
     
     public TransferPage selectCardForTransfer(int cardIndex) {
-        transferButtons.get(cardIndex).click();
+        
+        cards.get(cardIndex).$("[data-test-id='action-deposit']").click();
         return new TransferPage();
     }
     
@@ -49,7 +53,7 @@ public class DashboardPage {
         for (int i = 0; i < cards.size(); i++) {
             String text = cards.get(i).text();
             if (text.contains(cardNumber)) {
-                transferButtons.get(i).click();
+                cards.get(i).$("[data-test-id='action-deposit']").click();
                 return new TransferPage();
             }
         }

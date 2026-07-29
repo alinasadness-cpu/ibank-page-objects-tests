@@ -12,13 +12,12 @@ public class TransferTest {
     private DashboardPage dashboardPage;
 
    
-    private final String CARD_1_ID = DataHelper.getFirstCard().getId();
-    private final String CARD_2_ID = DataHelper.getSecondCard().getId();
+    private final String CARD_1_NUMBER = DataHelper.getFirstCard().getNumber();
+    private final String CARD_2_NUMBER = DataHelper.getSecondCard().getNumber();
     private final int INITIAL_BALANCE = DataHelper.getFirstCard().getBalance();
 
     @BeforeEach
     void setUp() {
-        
         var authInfo = DataHelper.getAuthInfo();
         LoginPage loginPage = new LoginPage();
         var verificationPage = loginPage.validLogin(
@@ -31,20 +30,20 @@ public class TransferTest {
 
     @Test
     void shouldTransferFromCard2ToCard1() {
-        int initialFirstBalance = dashboardPage.getCardBalance(CARD_1_ID);
-        int initialSecondBalance = dashboardPage.getCardBalance(CARD_2_ID);
+        int initialFirstBalance = dashboardPage.getCardBalance(CARD_1_NUMBER);
+        int initialSecondBalance = dashboardPage.getCardBalance(CARD_2_NUMBER);
         int transferAmount = 1000;
 
-        TransferPage transferPage = dashboardPage.selectCardForTransfer(CARD_1_ID);
+        TransferPage transferPage = dashboardPage.selectCardForTransfer(CARD_1_NUMBER);
         DashboardPage updatedDashboard = transferPage.transfer(
                 String.valueOf(transferAmount),
-                CARD_2_ID
+                CARD_2_NUMBER
         );
 
         updatedDashboard = updatedDashboard.refresh();
 
-        int updatedFirstBalance = updatedDashboard.getCardBalance(CARD_1_ID);
-        int updatedSecondBalance = updatedDashboard.getCardBalance(CARD_2_ID);
+        int updatedFirstBalance = updatedDashboard.getCardBalance(CARD_1_NUMBER);
+        int updatedSecondBalance = updatedDashboard.getCardBalance(CARD_2_NUMBER);
 
         assertEquals(initialFirstBalance + transferAmount, updatedFirstBalance);
         assertEquals(initialSecondBalance - transferAmount, updatedSecondBalance);
@@ -52,20 +51,20 @@ public class TransferTest {
 
     @Test
     void shouldTransferFromCard1ToCard2() {
-        int initialFirstBalance = dashboardPage.getCardBalance(CARD_1_ID);
-        int initialSecondBalance = dashboardPage.getCardBalance(CARD_2_ID);
+        int initialFirstBalance = dashboardPage.getCardBalance(CARD_1_NUMBER);
+        int initialSecondBalance = dashboardPage.getCardBalance(CARD_2_NUMBER);
         int transferAmount = 500;
 
-        TransferPage transferPage = dashboardPage.selectCardForTransfer(CARD_2_ID);
+        TransferPage transferPage = dashboardPage.selectCardForTransfer(CARD_2_NUMBER);
         DashboardPage updatedDashboard = transferPage.transfer(
                 String.valueOf(transferAmount),
-                CARD_1_ID
+                CARD_1_NUMBER
         );
 
         updatedDashboard = updatedDashboard.refresh();
 
-        int updatedFirstBalance = updatedDashboard.getCardBalance(CARD_1_ID);
-        int updatedSecondBalance = updatedDashboard.getCardBalance(CARD_2_ID);
+        int updatedFirstBalance = updatedDashboard.getCardBalance(CARD_1_NUMBER);
+        int updatedSecondBalance = updatedDashboard.getCardBalance(CARD_2_NUMBER);
 
         assertEquals(initialFirstBalance - transferAmount, updatedFirstBalance);
         assertEquals(initialSecondBalance + transferAmount, updatedSecondBalance);
@@ -73,20 +72,20 @@ public class TransferTest {
 
     @Test
     void shouldNotTransferMoreThanBalance() {
-        int initialFirstBalance = dashboardPage.getCardBalance(CARD_1_ID);
-        int initialSecondBalance = dashboardPage.getCardBalance(CARD_2_ID);
+        int initialFirstBalance = dashboardPage.getCardBalance(CARD_1_NUMBER);
+        int initialSecondBalance = dashboardPage.getCardBalance(CARD_2_NUMBER);
         int transferAmount = initialSecondBalance + 1000;
 
-        TransferPage transferPage = dashboardPage.selectCardForTransfer(CARD_1_ID);
+        TransferPage transferPage = dashboardPage.selectCardForTransfer(CARD_1_NUMBER);
         DashboardPage updatedDashboard = transferPage.transfer(
                 String.valueOf(transferAmount),
-                CARD_2_ID
+                CARD_2_NUMBER
         );
 
         updatedDashboard = updatedDashboard.refresh();
 
-        int updatedFirstBalance = updatedDashboard.getCardBalance(CARD_1_ID);
-        int updatedSecondBalance = updatedDashboard.getCardBalance(CARD_2_ID);
+        int updatedFirstBalance = updatedDashboard.getCardBalance(CARD_1_NUMBER);
+        int updatedSecondBalance = updatedDashboard.getCardBalance(CARD_2_NUMBER);
 
         assertEquals(initialFirstBalance, updatedFirstBalance);
         assertEquals(initialSecondBalance, updatedSecondBalance);
@@ -94,16 +93,16 @@ public class TransferTest {
 
     @Test
     void shouldNotTransferZeroAmount() {
-        int initialFirstBalance = dashboardPage.getCardBalance(CARD_1_ID);
-        int initialSecondBalance = dashboardPage.getCardBalance(CARD_2_ID);
+        int initialFirstBalance = dashboardPage.getCardBalance(CARD_1_NUMBER);
+        int initialSecondBalance = dashboardPage.getCardBalance(CARD_2_NUMBER);
 
-        TransferPage transferPage = dashboardPage.selectCardForTransfer(CARD_1_ID);
-        DashboardPage updatedDashboard = transferPage.transfer("0", CARD_2_ID);
+        TransferPage transferPage = dashboardPage.selectCardForTransfer(CARD_1_NUMBER);
+        DashboardPage updatedDashboard = transferPage.transfer("0", CARD_2_NUMBER);
 
         updatedDashboard = updatedDashboard.refresh();
 
-        int updatedFirstBalance = updatedDashboard.getCardBalance(CARD_1_ID);
-        int updatedSecondBalance = updatedDashboard.getCardBalance(CARD_2_ID);
+        int updatedFirstBalance = updatedDashboard.getCardBalance(CARD_1_NUMBER);
+        int updatedSecondBalance = updatedDashboard.getCardBalance(CARD_2_NUMBER);
 
         assertEquals(initialFirstBalance, updatedFirstBalance);
         assertEquals(initialSecondBalance, updatedSecondBalance);
@@ -111,14 +110,14 @@ public class TransferTest {
 
     @Test
     void shouldCancelTransfer() {
-        int initialFirstBalance = dashboardPage.getCardBalance(CARD_1_ID);
-        int initialSecondBalance = dashboardPage.getCardBalance(CARD_2_ID);
+        int initialFirstBalance = dashboardPage.getCardBalance(CARD_1_NUMBER);
+        int initialSecondBalance = dashboardPage.getCardBalance(CARD_2_NUMBER);
 
-        TransferPage transferPage = dashboardPage.selectCardForTransfer(CARD_1_ID);
+        TransferPage transferPage = dashboardPage.selectCardForTransfer(CARD_1_NUMBER);
         DashboardPage updatedDashboard = transferPage.cancelTransfer();
 
-        int updatedFirstBalance = updatedDashboard.getCardBalance(CARD_1_ID);
-        int updatedSecondBalance = updatedDashboard.getCardBalance(CARD_2_ID);
+        int updatedFirstBalance = updatedDashboard.getCardBalance(CARD_1_NUMBER);
+        int updatedSecondBalance = updatedDashboard.getCardBalance(CARD_2_NUMBER);
 
         assertEquals(initialFirstBalance, updatedFirstBalance);
         assertEquals(initialSecondBalance, updatedSecondBalance);

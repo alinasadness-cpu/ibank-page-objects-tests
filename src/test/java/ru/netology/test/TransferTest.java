@@ -12,10 +12,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TransferTest {
     private DashboardPage dashboardPage;
 
- 
+  
     private final String CARD_1_MASKED = DataHelper.getFirstCard().getMaskedNumber();
     private final String CARD_2_MASKED = DataHelper.getSecondCard().getMaskedNumber();
     
+   
     private final String CARD_1_FULL = DataHelper.getFirstCard().getNumber();
     private final String CARD_2_FULL = DataHelper.getSecondCard().getNumber();
 
@@ -35,15 +36,12 @@ public class TransferTest {
 
     @Test
     void shouldTransferFromCard2ToCard1() {
-       
+        
         int initialFirstBalance = dashboardPage.getCardBalance(CARD_1_MASKED);
         int initialSecondBalance = dashboardPage.getCardBalance(CARD_2_MASKED);
         int transferAmount = 1000;
 
-       
         TransferPage transferPage = dashboardPage.selectCardForTransfer(CARD_1_MASKED);
-        
-       
         DashboardPage updatedDashboard = transferPage.transfer(
                 String.valueOf(transferAmount),
                 CARD_2_FULL

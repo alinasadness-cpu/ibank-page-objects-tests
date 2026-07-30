@@ -24,6 +24,7 @@ public class DashboardPage {
         return extractBalance(text);
     }
     
+    
     public int getCardBalance(String maskedCardNumber) {
         SelenideElement card = cards.find(Condition.text(maskedCardNumber));
         String text = card.text();
@@ -43,7 +44,7 @@ public class DashboardPage {
         return new TransferPage();
     }
     
-   
+  
     public TransferPage selectCardForTransfer(String maskedCardNumber) {
         SelenideElement card = cards.find(Condition.text(maskedCardNumber));
         card.$("[data-test-id='action-deposit']").click();

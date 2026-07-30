@@ -24,14 +24,10 @@ public class DashboardPage {
         return extractBalance(text);
     }
     
-    public int getCardBalance(String cardNumber) {
-        for (SelenideElement card : cards) {
-            String text = card.text();
-            if (text.contains(cardNumber)) {
-                return extractBalance(text);
-            }
-        }
-        throw new IllegalArgumentException("Card with number " + cardNumber + " not found");
+    public int getCardBalance(String maskedCardNumber) {
+        SelenideElement card = cards.find(Condition.text(maskedCardNumber));
+        String text = card.text();
+        return extractBalance(text);
     }
     
     private int extractBalance(String text) {
@@ -47,15 +43,11 @@ public class DashboardPage {
         return new TransferPage();
     }
     
-    public TransferPage selectCardForTransfer(String cardNumber) {
-        for (int i = 0; i < cards.size(); i++) {
-            String text = cards.get(i).text();
-            if (text.contains(cardNumber)) {
-                cards.get(i).$("[data-test-id='action-deposit']").click();
-                return new TransferPage();
-            }
-        }
-        throw new IllegalArgumentException("Card with number " + cardNumber + " not found");
+   
+    public TransferPage selectCardForTransfer(String maskedCardNumber) {
+        SelenideElement card = cards.find(Condition.text(maskedCardNumber));
+        card.$("[data-test-id='action-deposit']").click();
+        return new TransferPage();
     }
     
     public DashboardPage refresh() {

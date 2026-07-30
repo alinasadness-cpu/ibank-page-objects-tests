@@ -18,7 +18,8 @@ public class DataHelper {
     
     @Value
     public static class CardInfo {
-        private String number;  
+        private String number;        
+        private String maskedNumber;  
         private int balance;
     }
     
@@ -31,10 +32,10 @@ public class DataHelper {
     }
     
     public static CardInfo getFirstCard() {
-        return new CardInfo("5559 0000 0000 0001", 10000);
+        return new CardInfo("5559 0000 0000 0001", "**** **** **** 0001", 10000);
     }
     
     public static CardInfo getSecondCard() {
-        return new CardInfo("5559 0000 0000 0002", 10000);
+        return new CardInfo("5559 0000 0000 0002", "**** **** **** 0002", 10000);
     }
 }
